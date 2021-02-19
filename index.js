@@ -41,9 +41,12 @@ bot.hears('Farmacias de turno', (ctx) => getFarmaciaDeTurno(ctx));
 
 bot.hears('Listado de Farmacias', (ctx) => getFarmacias(ctx));
 
+bot.hears('hi', (ctx) => ctx.reply('Hi there!'));
+
 //---------------------------------------------------------------------------------------------------
 //                                              ACTIONS
 //---------------------------------------------------------------------------------------------------
+/*
 bot.action('ayuda', (ctx) => {
 	ctx.deleteMessage();
 	getAyuda(ctx);
@@ -57,14 +60,7 @@ bot.action('farmacias', (ctx) => {
 bot.action('farmacia_de_turno', (ctx) => {
 	ctx.deleteMessage();
 	getFarmaciaDeTurno(ctx);
-});
-
-//Inicializar Bot
-bot.launch();
-
-// Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+});*/
 
 //---------------------------------------------------------------------------------------------------
 //                                              METHODS
@@ -316,6 +312,16 @@ var farmaciasJSON = {
 		}
 	]
 };
+
+//---------------------------------------------------------------------------------------------------
+//                                             INICIALIZAR BOT
+//---------------------------------------------------------------------------------------------------
+//Inicializar Bot
+bot.launch();
+
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 //---------------------------------------------------------------------------------------------------
 //                                              URLS PARA WEB
