@@ -12,8 +12,8 @@ const URL = process.env.URL || 'https://farma-bot-telegram.herokuapp.com';
 // En el apartado de .env es donde se colocan las credenciales y variables de entorno.
 // Instancio el Telegraf Bot con el token de mi bot, este lo consigo desde la app de Telegram con el robot BotFather -> /mybots
 const bot = new Telegraf(BOT_TOKEN);
-bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-expressApp.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
+//bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+//expressApp.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
 
 /*--------------------------------------------------------------------------------------------------
 LOGICA DEL BOT AQUI
@@ -29,17 +29,24 @@ bot.start((ctx) => {
 //Cuando invocamos /help, ejecutamos la función que querramos, en este caso una respuesta solicitando un sticker.
 bot.help((ctx) => ctx.reply('Send me a sticker'));
 
+bot.on('sticker', (ctx) => ctx.reply('👍'));
 /*--------------------------------------------------------------------------------------------------
 LOGICA DEL BOT AQUI
 --------------------------------------------------------------------------------------------------*/
 //---------------------------------------------------------------------------------------------------
 //                                              HEARS
 //---------------------------------------------------------------------------------------------------
-bot.hears('Ayuda', (ctx) => getAyuda(ctx));
+bot.hears('Ayuda', (ctx) => {
+	getAyuda(ctx);
+});
 
-bot.hears('Farmacias de turno', (ctx) => getFarmaciaDeTurno(ctx));
+bot.hears('Farmacias de turno', (ctx) => {
+	getFarmaciaDeTurno(ctx);
+});
 
-bot.hears('Listado de Farmacias', (ctx) => getFarmacias(ctx));
+bot.hears('Listado de Farmacias', (ctx) => {
+	getFarmacias(ctx);
+});
 
 bot.hears('hi', (ctx) => ctx.reply('Hi there!'));
 
@@ -75,7 +82,7 @@ function getAyuda(ctx) {
 				{ text: 'Farmacias de turno' }
 			],
 			[
-				{ text: 'Listado de Farmacias', callback_data: 'farmacias' }
+				{ text: 'Listado de Farmacias' }
 			]
 		];
 
