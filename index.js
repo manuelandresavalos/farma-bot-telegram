@@ -22,6 +22,7 @@ LOGICA DEL BOT AQUI
 //bot.start se ejecuta cuando una persona lo utiliza por primera vez.
 bot.start((ctx) => {
 	ctx.reply('Bienvenido/a FarmaBot! By Manuel Avalos');
+	getAyuda(ctx);
 });
 
 //bot.help es un comando propio de telegram (/help) y viene por defecto.
