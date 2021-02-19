@@ -21,7 +21,7 @@ LOGICA DEL BOT AQUI
 
 //bot.start se ejecuta cuando una persona lo utiliza por primera vez.
 bot.start((ctx) => {
-	ctx.reply('Bienvenido/a FarmaBot! By Manuel Avalos');
+	ctx.reply('Bienvenido/a Farmacias de turno SDE! By Manuel Avalos');
 	getAyuda(ctx);
 });
 
@@ -58,6 +58,13 @@ bot.action('farmacia_de_turno', (ctx) => {
 	ctx.deleteMessage();
 	getFarmaciaDeTurno(ctx);
 });
+
+//Inicializar Bot
+bot.launch();
+
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 //---------------------------------------------------------------------------------------------------
 //                                              METHODS
