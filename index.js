@@ -117,7 +117,7 @@ function getFarmacias(ctx) {
 function getFarmaciaDeTurno(ctx) {
 	const today = getToday();
 	const farmaNode = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == today);
-	let message = 'DE TURNO HOY  - ' + today + '\n\n';
+	let message = '<b>DE TURNO HOY</b>  - ' + today + '\n\n';
 	message += '<b>Farmacia:</b> ' + farmaNode.FARMACIA + '\n';
 	message += '<b>Dirección:</b> ' + farmaNode.DIRECCION + '\n';
 	message += '<b>eléfono:</b> ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
