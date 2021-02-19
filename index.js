@@ -111,7 +111,8 @@ function getFarmacias(ctx) {
 	message +=
 		'Recuerda que las farmacias están de turno \n desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
 
-	ctx.reply(message);
+	//ctx.reply(message);
+	ctx.telegram.sendMessage(ctx.chat.id, message, { reply_markup: { parse_mode: 'HTML' } });
 }
 
 function getFarmaciaDeTurno(ctx) {
