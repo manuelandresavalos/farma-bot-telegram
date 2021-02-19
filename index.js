@@ -118,7 +118,7 @@ function getFarmaciaDeTurno(ctx) {
 	let message = 'De turno hoy - ' + today + '\n\n';
 	message += 'Farmacia: ' + farmaNode.FARMACIA + '\n';
 	message += 'Dirección: ' + farmaNode.DIRECCION + '\n';
-	message += 'Teléfono: ' + (farma['T.E.'] != undefined ? farma['T.E.'] : 'Sin Teléfono');
+	message += 'Teléfono: ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
 
 	ctx.reply(message);
 }
