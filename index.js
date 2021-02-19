@@ -102,31 +102,30 @@ function getAyuda(ctx) {
 function getFarmacias(ctx) {
 	let message = '';
 	let farmaciasArr = filterArrayOfObjectByProperty(farmaciasJSON.farmacias, 'FARMACIA');
-	farmaciasArr.forEach((farma) => {
-		message += '<b>Farmacia:</b> ' + farma.FARMACIA + '\n';
-		message += '<b>Dirección:</b> ' + farma.DIRECCION + '\n';
-		message += '<b>Teléfono:</b> ' + (farma['T.E.'] != undefined ? farma['T.E.'] : 'Sin Teléfono');
+	farmaciasArr.forEach((farmaNode) => {
+		message += '<b>Farmacia:</b> ' + farmaNode.FARMACIA + '\n';
+		message += '<b>Dirección:</b> ' + farmaNode.DIRECCION + '\n';
+		message += '<b>eléfono:</b> ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
 		message += '\n\n';
 	});
 	message +=
-		'Recuerda que las farmacias están de turno \n desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
+		'<b>Recuerda que</b> las farmacias están de turno desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
 
-	//ctx.reply(message);
-	ctx.telegram.sendMessage(ctx.chat.id, message, { reply_markup: { parse_mode: 'HTML' } });
+	ctx.telegram.sendMessage(ctx.chat.id, message, { parse_mode: 'HTML' });
 }
 
 function getFarmaciaDeTurno(ctx) {
 	const today = getToday();
 	const farmaNode = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == today);
-	let message = 'De turno hoy - ' + today + '\n\n';
+	let message = 'DE TURNO HOY  - ' + today + '\n\n';
 	message += '<b>Farmacia:</b> ' + farmaNode.FARMACIA + '\n';
 	message += '<b>Dirección:</b> ' + farmaNode.DIRECCION + '\n';
-	message += '<b>Teléfono:</b> ' + farmaNode['T.E.'];
+	message += '<b>eléfono:</b> ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
 	message += '\n\n';
 	message +=
-		'Recuerda que las farmacias están de turno \n desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
+		'<b>Recuerda que</b> las farmacias están de turno desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
 
-	ctx.reply(message);
+	ctx.telegram.sendMessage(ctx.chat.id, message, { parse_mode: 'HTML' });
 }
 
 // Filtra los objetos repetidos de un array de objetos dependiendo la propiedad por la que se quiera filtrar
