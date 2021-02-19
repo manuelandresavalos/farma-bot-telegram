@@ -73,7 +73,7 @@ bot.action('farmacia_de_turno', (ctx) => {
 //                                              METHODS
 //---------------------------------------------------------------------------------------------------
 function getAyuda(ctx) {
-	bot.telegram.getMyCommands().then(() => {
+	bot.telegram.getMyCommands().then((listOfCommands) => {
 		let actions = [
 			[
 				{ text: 'Ayuda' }
@@ -85,8 +85,12 @@ function getAyuda(ctx) {
 				{ text: 'Listado de Farmacias' }
 			]
 		];
-
-		ctx.telegram.sendMessage(ctx.chat.id, 'Puedes realizar las siguientes acciones:', {
+		/*listOfCommands.forEach(commandObj => {
+      message += "/" + commandObj.command + "\n";
+      message += "" + commandObj.description + "\n\n";
+    });*/
+		let message = 'Puedes realizar las siguientes acciones\n';
+		ctx.telegram.sendMessage(ctx.chat.id, message, {
 			reply_markup: {
 				keyboard: actions
 			},
@@ -114,7 +118,7 @@ function getFarmaciaDeTurno(ctx) {
 	let message = 'De turno hoy - ' + today + '\n\n';
 	message += 'Farmacia: ' + farmaNode.FARMACIA + '\n';
 	message += 'Dirección: ' + farmaNode.DIRECCION + '\n';
-	message += 'Teléfono: ' + farmaNode['T.E.'];
+	message += 'Teléfono: ' + (farma['T.E.'] != undefined ? farma['T.E.'] : 'Sin Teléfono');
 
 	ctx.reply(message);
 }
