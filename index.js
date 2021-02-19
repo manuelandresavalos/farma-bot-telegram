@@ -40,7 +40,7 @@ bot.hears('Ayuda', (ctx) => {
 	getAyuda(ctx);
 });
 
-bot.hears('Farmacias de turno', (ctx) => {
+bot.hears('Farmacias de Turno', (ctx) => {
 	getFarmaciaDeTurno(ctx);
 });
 
@@ -79,17 +79,17 @@ function getAyuda(ctx) {
 				{ text: 'Ayuda' }
 			],
 			[
-				{ text: 'Farmacias de turno' }
+				{ text: 'Farmacias de Turno' }
 			],
 			[
 				{ text: 'Listado de Farmacias' }
 			]
 		];
-		/*listOfCommands.forEach(commandObj => {
-      message += "/" + commandObj.command + "\n";
-      message += "" + commandObj.description + "\n\n";
-    });*/
+
 		let message = 'Puedes realizar las siguientes acciones\n';
+		message += 'Escribir <b>"Ayuda"</b>, abrirá un teclado especial con las acciones que puedes hacer. \n';
+		message += 'Escribir <b>"Farmacias de Turno"</b>, te mostrará que farmacia está de turno el día de hoy. \n';
+		message += 'Escribir <b>"Listado de Farmacias"</b>, te mostrará el listado de todas las farmacias con sus datos.\n';
 		ctx.telegram.sendMessage(ctx.chat.id, message, {
 			reply_markup: {
 				keyboard: actions
@@ -102,12 +102,14 @@ function getAyuda(ctx) {
 function getFarmacias(ctx) {
 	let message = '';
 	let farmaciasArr = filterArrayOfObjectByProperty(farmaciasJSON.farmacias, 'FARMACIA');
-	farmaciasArr.forEach((farmaNode) => {
-		message += 'Farmacia: ' + farmaNode.FARMACIA + '\n';
-		message += 'Dirección: ' + farmaNode.DIRECCION + '\n';
-		message += 'Teléfono: ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
+	farmaciasArr.forEach((farma) => {
+		message += '<b>Farmacia:</b> ' + farma.FARMACIA + '\n';
+		message += '<b>Dirección:</b> ' + farma.DIRECCION + '\n';
+		message += '<b>Teléfono:</b> ' + (farma['T.E.'] != undefined ? farma['T.E.'] : 'Sin Teléfono');
 		message += '\n\n';
 	});
+	message +=
+		'Recuerda que las farmacias están de turno \n desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
 
 	ctx.reply(message);
 }
@@ -116,9 +118,12 @@ function getFarmaciaDeTurno(ctx) {
 	const today = getToday();
 	const farmaNode = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == today);
 	let message = 'De turno hoy - ' + today + '\n\n';
-	message += 'Farmacia: ' + farmaNode.FARMACIA + '\n';
-	message += 'Dirección: ' + farmaNode.DIRECCION + '\n';
-	message += 'Teléfono: ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
+	message += '<b>Farmacia:</b> ' + farmaNode.FARMACIA + '\n';
+	message += '<b>Dirección:</b> ' + farmaNode.DIRECCION + '\n';
+	message += '<b>Teléfono:</b> ' + farmaNode['T.E.'];
+	message += '\n\n';
+	message +=
+		'Recuerda que las farmacias están de turno \n desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
 
 	ctx.reply(message);
 }
