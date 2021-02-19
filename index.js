@@ -102,10 +102,10 @@ function getAyuda(ctx) {
 function getFarmacias(ctx) {
 	let message = '';
 	let farmaciasArr = filterArrayOfObjectByProperty(farmaciasJSON.farmacias, 'FARMACIA');
-	farmaciasArr.forEach((farma) => {
-		message += 'Farmacia: ' + farma.FARMACIA + '\n';
-		message += 'Dirección: ' + farma.DIRECCION + '\n';
-		message += 'Teléfono: ' + farma['T.E.'];
+	farmaciasArr.forEach((farmaNode) => {
+		message += 'Farmacia: ' + farmaNode.FARMACIA + '\n';
+		message += 'Dirección: ' + farmaNode.DIRECCION + '\n';
+		message += 'Teléfono: ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
 		message += '\n\n';
 	});
 
