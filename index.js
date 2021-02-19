@@ -28,20 +28,89 @@ bot.start((ctx) => {
 //Cuando invocamos /help, ejecutamos la función que querramos, en este caso una respuesta solicitando un sticker.
 bot.help((ctx) => ctx.reply('Send me a sticker'));
 
-//bot.on se ejecuta cuando se recive un tipo de mensaje especifico, ejemplos:
-// bot.on("chosen_inline_result")  -> Se ejecuta cuando elijen un inline result (le dieron cklik a un botoncito de los inline_keyboard)
-// bot.on("sticker")               -> Se ejecuta cuando el usuario envia un sticker
-// bot.on("video")               -> Se ejecuta cuando el usuario envia un video
-// Mas info: https://telegraf.js.org/classes/telegraf.html#on
-bot.on('sticker', (ctx) => ctx.reply('👍'));
-
-//bot.hears escucha cada mensaje que llega y se fija si machea con la palabra que buscamos, si la coincidencia es exacta, ejecuta la function
-//En este caso, si el texto es "hi" se ejecuta. - https://www.geeksforgeeks.org/node-js-bot-hears-method/
-bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 /*--------------------------------------------------------------------------------------------------
 LOGICA DEL BOT AQUI
 --------------------------------------------------------------------------------------------------*/
+//---------------------------------------------------------------------------------------------------
+//                                              HEARS
+//---------------------------------------------------------------------------------------------------
+bot.hears('Ayuda', (ctx) => getAyuda(ctx));
 
+bot.hears('Farmacias de turno', (ctx) => getFarmaciaDeTurno(ctx));
+
+bot.hears('Listado de Farmacias', (ctx) => getFarmacias(ctx));
+
+//---------------------------------------------------------------------------------------------------
+//                                              ACTIONS
+//---------------------------------------------------------------------------------------------------
+bot.action('ayuda', (ctx) => {
+	ctx.deleteMessage();
+	getAyuda(ctx);
+});
+
+bot.action('farmacias', (ctx) => {
+	ctx.deleteMessage();
+	getFarmacias(ctx);
+});
+
+bot.action('farmacia_de_turno', (ctx) => {
+	ctx.deleteMessage();
+	getFarmaciaDeTurno(ctx);
+});
+
+//---------------------------------------------------------------------------------------------------
+//                                              METHODS
+//---------------------------------------------------------------------------------------------------
+function getAyuda(ctx) {
+	bot.telegram.getMyCommands().then((listOfCommands) => {
+		let actions = [
+			[
+				{ text: 'Ayuda' }
+			],
+			[
+				{ text: 'Farmacias de turno' }
+			],
+			[
+				{ text: 'Listado de Farmacias', callback_data: 'farmacias' }
+			]
+		];
+
+		ctx.telegram.sendMessage(ctx.chat.id, 'Puedes realizar las siguientes acciones:', {
+			reply_markup: {
+				keyboard: actions
+			},
+			parse_mode: 'HTML'
+		});
+	});
+}
+
+function getFarmacias(ctx) {
+	let message = '';
+	let farmaciasArr = filterArrayOfObjectByProperty(farmaciasJSON.farmacias, 'FARMACIA');
+	farmaciasArr.forEach((farma) => {
+		message += 'Farmacia: ' + farma.FARMACIA + '\n';
+		message += 'Dirección: ' + farma.DIRECCION + '\n';
+		message += 'Teléfono: ' + farma['T.E.'];
+		message += '\n\n';
+	});
+
+	ctx.reply(message);
+}
+
+function getFarmaciaDeTurno(ctx) {
+	const today = getToday();
+	const farmaNode = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == today);
+	let message = 'De turno hoy - ' + today + '\n\n';
+	message += 'Farmacia: ' + farmaNode.FARMACIA + '\n';
+	message += 'Dirección: ' + farmaNode.DIRECCION + '\n';
+	message += 'Teléfono: ' + farmaNode['T.E.'];
+
+	ctx.reply(message);
+}
+
+//---------------------------------------------------------------------------------------------------
+//                                              URLS PARA WEB
+//---------------------------------------------------------------------------------------------------
 expressApp.get('/', (req, res) => {
 	res.send('Hello World!');
 });
