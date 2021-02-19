@@ -119,6 +119,26 @@ function getFarmaciaDeTurno(ctx) {
 	ctx.reply(message);
 }
 
+// Filtra los objetos repetidos de un array de objetos dependiendo la propiedad por la que se quiera filtrar
+function filterArrayOfObjectByProperty(array, prop) {
+	let hash = {};
+	let farmaArray = array.filter(function(current) {
+		var exists = !hash[current[prop]];
+		hash[current[prop]] = true;
+		return exists;
+	});
+
+	return farmaArray;
+}
+
+function getToday() {
+	let date = new Date();
+	let day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+	let month = date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
+	let year = date.getFullYear();
+
+	return day + '/' + month + '/' + year;
+}
 //---------------------------------------------------------------------------------------------------
 //                                              JSON DATA
 //---------------------------------------------------------------------------------------------------
