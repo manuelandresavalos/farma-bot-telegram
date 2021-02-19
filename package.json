@@ -1,0 +1,30 @@
+{
+	"name": "farma-bot-telegram",
+	"version": "0.0.1",
+	"description": "Un bot para buscar farmacias de turno",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/manuelandresavalos/farma-bot-telegram.git"
+	},
+	"keywords": [
+		"Telegram",
+		"Telegraf",
+		"TelegramBot",
+		"Bot",
+		"Farmacia"
+	],
+	"author": "Manuel Avalos",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/manuelandresavalos/farma-bot-telegram/issues"
+	},
+	"homepage": "https://github.com/manuelandresavalos/farma-bot-telegram#readme",
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"telegraf": "^3.6.7"
+	}
+}
