@@ -124,6 +124,7 @@ function getFarmaciaDeTurno(ctx) {
 	message += '\n\n';
 	message +=
 		'<b>Recuerda que</b> las farmacias están de turno desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
+	message += 'Hora actual: ' + getTime();
 
 	ctx.telegram.sendMessage(ctx.chat.id, message, { parse_mode: 'HTML' });
 }
@@ -147,6 +148,14 @@ function getToday() {
 	let year = date.getFullYear();
 
 	return day + '/' + month + '/' + year;
+}
+
+function getTime() {
+	let time = new Date();
+	let hours = time.getHours() > 9 ? time.getHours() : '0' + time.getHours();
+	let minutes = time.getMinutes() > 9 ? time.getMinutes() : '0' + time.getMinutes();
+
+	return hours + ':' + minutes;
 }
 //---------------------------------------------------------------------------------------------------
 //                                              JSON DATA
