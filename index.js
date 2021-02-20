@@ -133,14 +133,14 @@ function getFarmaciaDeTurno(ctx) {
 	const nowTimeFormat = now.toISOString().split('T')[1].split(':').slice(0, 2).join(':');
 
 	let farmaNode = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == todayDateFormat);
-	let message = '<b>DE TURNO HOY</b> - ' + todayDateFormat + '\n\n';
+	let message = '<b>DE TURNO HOY</b> - ' + todayDateFormat + '\n';
 	message += '<b>Farmacia:</b> ' + farmaNode.FARMACIA + '\n';
 	message += '<b>Dirección:</b> ' + farmaNode.DIRECCION + '\n';
 	message += '<b>eléfono:</b> ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
 	message += '\n\n';
 
 	let farmaNode2 = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == tomorrowDateFormat);
-	message += '<b>DE TURNO MAÑANA</b> - ' + tomorrowDateFormat + '\n\n';
+	message += '<b>DE TURNO MAÑANA</b> - ' + tomorrowDateFormat + '\n';
 	message += '<b>Farmacia:</b> ' + farmaNode2.FARMACIA + '\n';
 	message += '<b>Dirección:</b> ' + farmaNode2.DIRECCION + '\n';
 	message += '<b>eléfono:</b> ' + (farmaNode2['T.E.'] != undefined ? farmaNode2['T.E.'] : 'Sin Teléfono');
