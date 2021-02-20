@@ -146,7 +146,7 @@ function getFarmaciaDeTurno(ctx) {
 	message += '<b>eléfono:</b> ' + (farmaNode2['T.E.'] != undefined ? farmaNode2['T.E.'] : 'Sin Teléfono');
 	message += '\n\n';
 	message +=
-		'<b>Recuerda que</b> las farmacias están de turno desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
+		'<b>Recuerda</b> que las farmacias están de turno desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
 	message += 'Fecha actual: ' + todayDateFormat + '\n';
 	message += 'Hora actual: ' + nowTimeFormat;
 
