@@ -18,6 +18,17 @@ const bot = new Telegraf(BOT_TOKEN);
 /*--------------------------------------------------------------------------------------------------
 LOGICA DEL BOT AQUI
 --------------------------------------------------------------------------------------------------*/
+Date.prototype.addHours = function(h) {
+	this.setTime(this.getTime() + h * 60 * 60 * 1000);
+
+	return this;
+};
+
+Date.prototype.addDays = function(days) {
+	var date = new Date(this.valueOf());
+	date.setDate(date.getDate() + days);
+	return date;
+};
 
 //bot.start se ejecuta cuando una persona lo utiliza por primera vez.
 bot.start((ctx) => {
@@ -115,16 +126,29 @@ function getFarmacias(ctx) {
 }
 
 function getFarmaciaDeTurno(ctx) {
-	const today = getToday();
-	const farmaNode = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == today);
-	let message = '<b>DE TURNO HOY</b>  - ' + today + '\n\n';
+	const now = getGTMActualTime('GTM-3');
+	const tomorrow = now.addDays(1);
+	const todayDateFormat = now.toISOString().split('T')[0].split('-').reverse().join('/');
+	const tomorrowDateFormat = tomorrow.toISOString().split('T')[0].split('-').reverse().join('/');
+	const nowTimeFormat = now.toISOString().split('T')[1].split(':').slice(0, 2).join(':');
+
+	let farmaNode = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == todayDateFormat);
+	let message = '<b>DE TURNO HOY</b> - ' + todayDateFormat + '\n\n';
 	message += '<b>Farmacia:</b> ' + farmaNode.FARMACIA + '\n';
 	message += '<b>Dirección:</b> ' + farmaNode.DIRECCION + '\n';
 	message += '<b>eléfono:</b> ' + (farmaNode['T.E.'] != undefined ? farmaNode['T.E.'] : 'Sin Teléfono');
 	message += '\n\n';
+
+	let farmaNode2 = farmaciasJSON.farmacias.find((nodo) => nodo.DATE == tomorrowDateFormat);
+	message += '<b>DE TURNO MAÑANA</b> - ' + tomorrowDateFormat + '\n\n';
+	message += '<b>Farmacia:</b> ' + farmaNode2.FARMACIA + '\n';
+	message += '<b>Dirección:</b> ' + farmaNode2.DIRECCION + '\n';
+	message += '<b>eléfono:</b> ' + (farmaNode2['T.E.'] != undefined ? farmaNode2['T.E.'] : 'Sin Teléfono');
+	message += '\n\n';
 	message +=
 		'<b>Recuerda que</b> las farmacias están de turno desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
-	message += 'Hora actual: ' + getActualTime('GTM-3');
+	message += 'Fecha actual: ' + todayDateFormat + '\n';
+	message += 'Hora actual: ' + nowTimeFormat;
 
 	ctx.telegram.sendMessage(ctx.chat.id, message, { parse_mode: 'HTML' });
 }
@@ -143,27 +167,22 @@ function filterArrayOfObjectByProperty(array, prop) {
 
 function getToday() {
 	let date = new Date();
-	let day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
-	let month = date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
-	let year = date.getFullYear();
-
-	return day + '/' + month + '/' + year;
+	//let day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+	//let month = date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
+	//let year = date.getFullYear();
+	//return day + '/' + month + '/' + year;
+	return date;
 }
 
-function getActualTime(gtmString) {
+function getGTMActualTime(gtmString) {
 	let time = new Date();
 	time.addHours(extractGTMTimeFromString(gtmString));
-	let hours = time.getHours() > 9 ? time.getHours() : '0' + time.getHours();
-	let minutes = time.getMinutes() > 9 ? time.getMinutes() : '0' + time.getMinutes();
 
-	return hours + ':' + minutes;
+	//let hours = time.getHours() > 9 ? time.getHours() : '0' + time.getHours();
+	//let minutes = time.getMinutes() > 9 ? time.getMinutes() : '0' + time.getMinutes();
+	//return hours + ':' + minutes;
+	return time;
 }
-
-Date.prototype.addHours = function(h) {
-	this.setTime(this.getTime() + h * 60 * 60 * 1000);
-
-	return this;
-};
 
 function extractGTMTimeFromString(gtmString) {
 	let tempString = gtmString.toLowerCase();
