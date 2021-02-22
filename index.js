@@ -1,6 +1,7 @@
 const { Telegraf, Markup } = require('telegraf'); // -> Importo Telegraf - https://www.npmjs.com/package/telegraf
 const express = require('express');
 const dotenv = require('dotenv');
+const fs = require('fs');
 
 const expressApp = express();
 dotenv.config();
@@ -192,7 +193,9 @@ function extractGTMTimeFromString(gtmString) {
 //---------------------------------------------------------------------------------------------------
 //                                              JSON DATA
 //---------------------------------------------------------------------------------------------------
-var farmaciasJSON = {
+var contents = fs.readFileSync('farmacias.json');
+var farmaciasJSON = JSON.parse(contents);
+/*var farmaciasJSON = {
 	farmacias: [
 		{
 			DATE: '01/02/2021',
@@ -388,7 +391,7 @@ var farmaciasJSON = {
 			GRUPO: '4'
 		}
 	]
-};
+};*/
 
 //---------------------------------------------------------------------------------------------------
 //                                             INICIALIZAR BOT
