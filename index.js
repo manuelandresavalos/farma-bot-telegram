@@ -217,5 +217,3 @@ expressApp.get('/', (req, res) => {
 expressApp.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });
-
-getFarmacias();
