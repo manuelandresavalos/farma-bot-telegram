@@ -125,8 +125,7 @@ function getFarmacias(ctx) {
 	message +=
 		'<b>Recuerda que</b> las farmacias están de turno desde las 22:00hs de un día hasta las 22:00hs del otro día.\n';
 
-	console.log(timeZones.getTimeZoneGMT('America/Cambridge_Bay'));
-	//ctx.telegram.sendMessage(ctx.chat.id, message, { parse_mode: 'HTML' });
+	ctx.telegram.sendMessage(ctx.chat.id, message, { parse_mode: 'HTML' });
 }
 
 function getFarmaciaDeTurno(ctx) {
