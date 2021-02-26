@@ -129,6 +129,7 @@ function getFarmacias(ctx) {
 }
 
 function getFarmaciaDeTurno(ctx) {
+	console.log(ctx);
 	const now = getGTMActualTime('GTM-3');
 	const tomorrow = now.addDays(1);
 	const todayDateFormat = now.toISOString().split('T')[0].split('-').reverse().join('/');
